@@ -11,7 +11,6 @@
 <p>Create and manage invoices</p>
 </div>
 
-<button class="logout" @click="logout">Logout</button>
 
 </div>
 
@@ -187,11 +186,6 @@ const total = computed(()=>{
 return subtotal.value
 })
 
-const logout = ()=>{
-localStorage.removeItem("token")
-window.location.href="/"
-}
-
 </script>
 <style>
 /* PAGE */
@@ -212,6 +206,8 @@ overflow:hidden;
 display:flex;
 justify-content:space-between;
 align-items:center;
+    margin-top: 41px;
+
 color:white;
 padding:20px;
 }
@@ -228,21 +224,6 @@ opacity:.8;
 font-size:13px;
 }
 
-/* LOGOUT BUTTON */
-
-.logout{
-background:white;
-border:none;
-padding:8px 14px;
-border-radius:10px;
-font-weight:600;
-cursor:pointer;
-transition:.2s;
-}
-
-.logout:hover{
-background:#f0f0f0;
-}
 
 /* CARD */
 
@@ -315,7 +296,8 @@ top:50%;
 transform:translateY(-50%);
 width:16px;
 height:16px;
-fill:#777;
+fill:#04515a;
+background:#e6f2f3;
 pointer-events:none;
 }
 
@@ -455,7 +437,6 @@ border-radius:10px;
 gap:10px;
 position:relative;
 }
-
 .item-name{
 grid-column:1 / span 2;
 }
@@ -469,8 +450,8 @@ font-weight:700;
 
 .remove{
 position:absolute;
-top:10px;
-right:10px;
+        top: 19px;
+        right: -18px;
 height:26px;
 width:26px;
 font-size:12px;

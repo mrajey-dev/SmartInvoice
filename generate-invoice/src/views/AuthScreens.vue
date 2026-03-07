@@ -3,25 +3,32 @@
 
     <!-- WELCOME SCREEN -->
     <div v-if="tab==='welcome'" class="screen welcome">
-      <div class="welcome-content">
-        <h3>Welcome To</h3>
-        <h1>Smart Invoice</h1>
+  <div class="welcome-content">
 
-        <p>Streamline your invoicing process with our easy-to-use platform.</p>
+    <!-- Logo -->
+    <img :src="logo" class="app-logo" />
 
-        <div class="welcome-buttons">
-         
-          <button class="btn-light" @click="tab='register'">Get Started</button>
-        </div>
-      </div>
+    <h1>Smart<strong>invoice</strong></h1>
+
+    <div class="slider">
+      <img :src="slides[currentSlide]" class="slide-img" />
     </div>
+
+    <p>Streamline your invoicing process with our easy-to-use platform.</p>
+
+    <div class="welcome-buttons">
+      <button class="btn-light" @click="tab='register'">Get Started</button>
+    </div>
+
+  </div>
+</div>
 
 
     <!-- LOGIN SCREEN -->
     <div v-if="tab==='login'" class="screen">
        <div class="top-info">
     <h1>Hello!</h1>
-    <p>Welcone to SmartInvoice!</p>
+    <p>Welcome to SmartInvoice!</p>
   </div>
       <div class="card">
 
@@ -107,7 +114,33 @@
 <script setup>
 import { ref } from "vue"
 import axios from "axios"
+import { useRouter } from "vue-router"
+import { onMounted } from "vue"
+import logo from "../assets/logo.png"
+import slide1 from "../assets/in1.png"
+import slide3 from "../assets/in3.png"
+import slide4 from "../assets/in4.png"
 
+const currentSlide = ref(0)
+
+const slides = [
+  slide3,
+  slide1,
+  slide4
+]
+
+onMounted(() => {
+  setInterval(() => {
+    currentSlide.value =
+      (currentSlide.value + 1) % slides.length
+  }, 3000)
+
+  const token = localStorage.getItem("token")
+  if (token) {
+    router.push("/home")
+  }
+})
+const router = useRouter()
 const tab = ref("welcome")
 
 // Register form
@@ -157,7 +190,7 @@ const login = async () => {
 
     alert("Login Successful")
 
-    window.location.href = "/home"
+    router.push("/home")
 
   } catch (err) {
     alert("Invalid credentials")
@@ -177,28 +210,19 @@ const login = async () => {
   font-family: 'Inter', sans-serif;
 }
 
-.screen{
-  width:375px;
-  height:720px;
-  background:linear-gradient(180deg, #044d56, #038c98);
-  border-radius:30px;
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
-}
 
 /* welcome */
 
 .welcome-content{
   text-align:center;
   color:white;
-  padding-bottom:40px;
+  padding-bottom:94px;
 }
 
 .welcome h1{
   font-size:28px;
+  font-family: system-ui;
+  margin-bottom: 141px;
   font-weight:700;
 }
 
@@ -212,6 +236,7 @@ const login = async () => {
 .welcome-buttons{
   margin-top:40px;
   display:flex;
+      justify-content: space-around;
 }
 
 .btn-dark{
@@ -224,13 +249,15 @@ const login = async () => {
 }
 
 .btn-light{
-  flex:1;
+  /* flex:1; */
   padding:16px;
   background:white;
   color:#04515a;
   border:none;
   font-size:16px;
   z-index: 9;
+  width: 180px;
+  border-radius: 12px;
 }
 
 /* card */
@@ -240,6 +267,7 @@ const login = async () => {
   background:white;
   border-radius:30px 30px 0 0;
   padding:30px;
+  z-index: 9;
 }
 
 .card h2{
@@ -329,10 +357,10 @@ input{
     border-radius:0;
   }
 }.screen{
-  width:375px;
-  height:720px;
-  background:linear-gradient(180deg, #044d56, #038c98);
-  border-radius:30px;
+ width: 100%;
+    height: 100%;
+  background:linear-gradient(180deg, #ffffff, #009688);
+
   position:relative;
   overflow:hidden;
   display:flex;
@@ -367,7 +395,7 @@ input{
   top:60px;
   left:0;
   width:100%; 
-  color:white;
+  color:rgb(0, 0, 0);
   padding:0 30px;
 }
 
@@ -381,5 +409,38 @@ input{
   font-size:14px;
   opacity:0.9;
   line-height:1.5;
+}
+.slider{
+  height:219px;
+  margin-bottom:25px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.slide-img{
+     z-index: 9;
+  height:266px;
+  object-fit:cover;
+  border-radius:20px;
+    margin-top: -56px;
+  /* box-shadow:0 10px 30px rgba(0,0,0,0.25); */
+  transition:all .5s ease;
+}
+.app-logo{
+  width:90px;
+  border-radius: 100px;
+  margin-bottom:10px;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
+.welcome-content{
+  text-align:center;
+  color:#000000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+strong{
+  color:#024046;
 }
 </style>
