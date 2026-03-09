@@ -154,7 +154,7 @@ const loginEmail = ref("")
 const loginPassword = ref("")
 
 // API base URL
-const API = "http://127.0.0.1:8000/api"
+const API = "https://products.archenterprises.co.in/api/api"
 
 // REGISTER
 const register = async () => {
